@@ -102,36 +102,31 @@ function actionPage() {
 
 //фильтр по акции
 
-    discountCheckbox.addEventListener('click', () => {
-        cards.forEach((card) => {
-            if (discountCheckbox.checked) {
-                if (!card.querySelector('.card-sale')) {
-                    card.parentNode.style.display = 'none';
-                }
-            } else {
-                card.parentNode.style.display = '';
-            }
-        });
-    });
+    discountCheckbox.addEventListener('click', filter);
 
 
 
 //фильтр по цене
 
-    min.addEventListener('change', filterPrice);
-    max.addEventListener('change', filterPrice);
+    min.addEventListener('change', filter);
+    max.addEventListener('change', filter);
 
-    function filterPrice() {
-        cards.forEach((card) => {
+
+
+    function filter() {
+        cards.forEach((card)=> {
             const cardPrice = card.querySelector('.card-price');
             const price = parseFloat(cardPrice.textContent);
+            const discount =card.querySelector('.card-sale');
+
             if ((min.value && price < min.value) || (max.value && price > max.value)) {
+                card.parentNode.style.display = 'none';
+            } else if (discountCheckbox.checked && !discount) {
                 card.parentNode.style.display = 'none';
             } else {
                 card.parentNode.style.display = '';
             }
-
-        });
+                    });
     }
 // поиск
     searchBtn.addEventListener('click', () => {
@@ -153,6 +148,17 @@ function actionPage() {
 
 // end фильтр акции
 
+//getdata
+    
+function getData() {
+    fetch('../bd.bd.json');
+    console.log(fetch('../bd.bd.json'));
+}
+
+
+//getdata end
+
+getData();
 
 toggleCart();
 toggleCheckbox();
